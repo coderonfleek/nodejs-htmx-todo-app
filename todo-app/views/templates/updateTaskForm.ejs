@@ -1,0 +1,17 @@
+<form>
+    <div>
+        <input name="task" type="text" value="<%= task.task %>" class="form-control" placeholder="Enter Task" aria-label="Enter Task">
+    </div>
+    <div>
+        <input type="checkbox" name="done" <%= task.done ? 'checked' : '' %>>
+    </div>
+    
+    <div class="mt-2">
+        <button type="submit" class="btn btn-primary" 
+        hx-post="/updatetask/<%= task.id %>"
+        hx-target="#tasklist"
+        >Update Task</button>
+    </div>
+    
+
+</form>

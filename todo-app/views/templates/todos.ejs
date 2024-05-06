@@ -1,0 +1,20 @@
+
+<ul class="list-group">
+    <% tasks.forEach(function(taskItem) { %>
+    <li class="list-group-item">
+        <span style="<%= taskItem.done? 'text-decoration: line-through;' : ''%>">
+            <%= taskItem.task %> 
+        </span>
+        
+
+        <!-- Edit Button -->
+        <a href="#" hx-get="/getupdateform/<%= taskItem.id %>" 
+                    hx-target="#taskForm">[Edit]</a> | 
+
+        <!-- Delete Button -->
+        <a href="#" hx-post="/deletetask/<%= taskItem.id %>"
+                    hx-target="#tasklist"
+                    hx-confirm="Are you sure you want to delete this task?">[Delete]</a>
+    </li>
+    <% }); %>
+</ul>
