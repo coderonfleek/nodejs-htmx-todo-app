@@ -33,13 +33,19 @@ let db;
 
 
 app.get("/", (req, res) => {
-    res.send("Welcome to the Task List API");
+    //res.send("Welcome to the Task List API");
+
+    res.render("templates/home");
 })
 
 app.get("/todos", async (req, res) => {
     
     await fetchTasks(res);
     
+})
+
+app.get("/gettaskform", async (req, res) => {
+    res.render("/templates/addTaskForm")
 })
 
 app.post("/addtask", async (req, res) => {
@@ -55,6 +61,10 @@ app.post("/addtask", async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+})
+
+app.get("/getupdateform", async (req, res) => {
+    res.render("/templates/addTaskForm")
 })
 
 app.post("/updatetask", async (req, res) => {
@@ -86,6 +96,23 @@ app.post("/deletetask", async (req, res) => {
         console.log(error)
     }
 })
+
+async function fetchTask(id) {
+
+    const fetchSingleSQL = `SELECT * FROM tasks WHERE id = ?`;
+
+    try {
+        const [rows] = await db.query(fetchSingleSQL);
+
+        if(rows.length > 0){
+            return rows[0]
+        }else{
+            return null;
+        }
+    } catch (error) {
+        throw("Error retrieving task");
+    }
+}
 
 async function fetchTasks(res) {
     const fetchSQL = `SELECT * FROM tasks`;
